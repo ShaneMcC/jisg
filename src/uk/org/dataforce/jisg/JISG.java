@@ -32,6 +32,8 @@ import uk.org.dataforce.jisg.cliparser.CLIParam;
 import uk.org.dataforce.jisg.cliparser.BooleanParam;
 import uk.org.dataforce.jisg.cliparser.StringParam;
 import uk.org.dataforce.jisg.cliparser.IntegerParam;
+import uk.org.dataforce.jisg.filetypes.FileType;
+import uk.org.dataforce.jisg.filetypes.FileTypeManager;
 
 /**
  * Main JISG class.
@@ -78,7 +80,24 @@ public class JISG {
 			Logger.setLevel(LogLevel.DEBUG);
 		}
 		
+		FileType thisFileType;
+		
 		Logger.info("JISG Loaded.");
+		if (cli.getParamNumber("-type") > 0) {
+			FileTypeManager fileTypeManager = FileTypeManager.getFileTypeManager();
+			String fileTypeName = cli.getParam("-type").getStringValue();
+			if (!fileTypeManager.addFileType(fileTypeName+"FileType")) {
+				Logger.error("Invalid file type given. Terminating");
+				System.exit(1);
+			} else {
+				thisFileType = fileTypeManager.getFileType(fileTypeName+"FileType");
+				Logger.info("Set file type to: "+thisFileType);
+			}
+		} else {
+			Logger.error("No log files type given. Terminating");
+			System.exit(1);
+		}
+		
 		ArrayList<String> redundant = cli.getRedundant();
 		if (redundant.size() < 1) {
 			Logger.error("No log files given. Terminating");
@@ -98,7 +117,7 @@ public class JISG {
 		cli.add(new BooleanParam('h', "help", "Show Help"));
 		cli.add(new BooleanParam('d', "debug", "Enable extra debugging. (Use twice for more)"));
 		cli.add(new BooleanParam('s', "silent", "Disable all output"));
-		cli.add(new BooleanParam('t', "type", "Type of log file"));
+		cli.add(new StringParam('t', "type", "Type of log file"));
 		cli.add(new BooleanParam((char)0, "fake", "Don't actually parse log files"));
 		cli.setHelp(cli.getParam("-help"));
 		return cli;
