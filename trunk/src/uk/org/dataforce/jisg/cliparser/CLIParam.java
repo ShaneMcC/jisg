@@ -82,4 +82,11 @@ public abstract class CLIParam {
 	 * @return true if value was valid, else false.
 	 */
 	public abstract boolean setValue(final String value);
+	
+	/**
+	 * Return the value of this param as a string.
+	 *
+	 * @return The value of this param as a string.
+	 */
+	public abstract String getStringValue();
 }

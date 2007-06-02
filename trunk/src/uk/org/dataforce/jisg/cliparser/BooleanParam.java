@@ -75,4 +75,13 @@ public class BooleanParam extends CLIParam {
 	public boolean getValue() {
 		return myValue;
 	}
+	
+	/**
+	 * Return the value of this param as a string.
+	 *
+	 * @return The value of this param as a string.
+	 */
+	public String getStringValue() {
+		return ""+getValue();
+	}
 }
