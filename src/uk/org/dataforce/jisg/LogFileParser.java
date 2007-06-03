@@ -1,4 +1,4 @@
-/*
+s /*
  * Copyright (c) 2006-2007 Shane Mc Cormack
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33,7 +33,7 @@ public class LogFileParser {
 	/**
 	 * Create an instance of LogFileParser.
 	 */
-	public LogFileParser(final FileType type, file String file) {
+	public LogFileParser(final FileType type, final String file) {
 		
 	}
 }
