@@ -183,6 +183,29 @@ public class CLIParser {
 	}
 	
 	/**
+	 * Show the help
+	 */
+	public void showHelp(final String title, final String usage) {
+		System.out.println(title);
+		System.out.println("------------------");
+		System.out.println(usage);
+		System.out.println(" ");
+		for (CLIParam param : this.getParamList()) {
+			if (param.getChr() != 0) {
+				System.out.print("-"+param.getChr()+" ");
+			} else {
+				System.out.print("   ");
+			}
+			if (param.getString().length() > 0) {
+				System.out.print("--"+param.getString()+" ");
+			} else {
+				System.out.print("\t\t");
+			}
+			System.out.println("\t"+param.getDescription());
+		}
+	}
+	
+	/**
 	 * Given a string array of arguments, parse as CLI Params.
 	 *
 	 * @param args Arguments to pass

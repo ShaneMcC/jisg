@@ -48,23 +48,7 @@ public class JISG {
 		Logger.setLevel(LogLevel.INFO);
 		CLIParser cli = setupCLIParser();
 		if (cli.wantsHelp(args)) {
-			System.out.println("JISG Help");
-			System.out.println("------------------");
-			System.out.println("jisg [options [--]] logfile1 [logfile2 ... logfileN]");
-			System.out.println(" ");
-			for (CLIParam param : cli.getParamList()) {
-				if (param.getChr() != 0) {
-					System.out.print("-"+param.getChr()+" ");
-				} else {
-					System.out.print("   ");
-				}
-				if (param.getString().length() > 0) {
-					System.out.print("--"+param.getString()+" ");
-				} else {
-					System.out.print("\t\t");
-				}
-				System.out.println("\t"+param.getDescription());
-			}
+			cli.showHelp("JISG Help", "jisg [options [--]] logfile1 [logfile2 ... logfileN]");
 			System.exit(0);
 		}
 		
