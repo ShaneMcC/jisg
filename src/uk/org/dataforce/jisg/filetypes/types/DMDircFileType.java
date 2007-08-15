@@ -25,6 +25,8 @@
 package uk.org.dataforce.jisg.filetypes.types;
 
 import uk.org.dataforce.jisg.filetypes.FileType;
+import uk.org.dataforce.jisg.LineType;
+import uk.org.dataforce.jisg.LineInfo;
 
 /**
  * Defines the standard methods that should be implemented by filetypes.
@@ -41,15 +43,14 @@ public class DMDircFileType extends FileType {
 	 * @return Name of filetype
 	 */
 	public String toString() { return "DMDirc"; }
-
+	
 	/**
-	 * Compares this object with the specified object for order.
-	 * Returns a negative integer, zero, or a positive integer as per String.compareTo();
+	 * Get the line info for a given line.
 	 *
-	 * @param o Object to compare to
-	 * @return a negative integer, zero, or a positive integer.
+	 * @param line The line to get the type of
+	 * @return Info for the line
 	 */
-	public int compareTo(FileType o) {
-		return toString().compareTo(o.toString());
+	public LineInfo getLineInfo(final String line) {
+		return new LineInfo(LineType.NONE, line);
 	}
 }

@@ -24,6 +24,8 @@
 
 package uk.org.dataforce.jisg.filetypes;
 
+import uk.org.dataforce.jisg.LineInfo;
+
 /**
  * Defines the standard methods that should be implemented by filetypes.
  */
@@ -39,6 +41,14 @@ public abstract class FileType implements Comparable<FileType> {
 	 * @return Name of filetype
 	 */
 	public abstract String toString();
+	
+	/**
+	 * Get the line info for a given line.
+	 *
+	 * @param line The line to get the type of
+	 * @return Info for the line
+	 */
+	public abstract LineInfo getLineInfo(final String line);
 
 	/**
 	 * Compares this object with the specified object for order.
@@ -47,7 +57,7 @@ public abstract class FileType implements Comparable<FileType> {
 	 * @param o Object to compare to
 	 * @return a negative integer, zero, or a positive integer.
 	 */
-	public int compareTo(FileType o) {
+	public final int compareTo(FileType o) {
 		return toString().compareTo(o.toString());
 	}
 }

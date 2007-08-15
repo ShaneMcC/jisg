@@ -25,60 +25,59 @@
 package uk.org.dataforce.jisg;
 
 /**
- * JISG Logger levels.
+ * This class gives information about a line.
  */
-public enum LogLevel {
-	/** Silent. */
-	SILENT (0, "Silent"),
-	/** Error. */
-	ERROR (10, "Error"),
-	/** Warnings. */
-	WARNING (20, "Warning"),
-	/** General Information. */
-	INFO (30, "Info"),
-	/** Debugging Information. */
-	DEBUG (40, "Debug"),
-	/** Advanced Debugging Information. */
-	DEBUG2 (50, "Debug2");
+public class LineInfo {
+	/** The line type for this line */
+	final LineType myLineType;
 	
-	/** Number for this log level. */
-	private int myLevel;
-	/** Name for this log level. */
-	private String myName;
+	/** The line this object represents */
+	final String myLine;
 	
 	/**
-	 * Create a new LogLevel.
-	 *
-	 * @param level Number for this log level.
-	 * @param name Name for this log level.
+	 * The additional params related to this line.
+	 * What these params actually represent is determined by the LineType
 	 */
-	LogLevel (final int level, final String name) {
-		myLevel = level;
-		myName = name;
+	final Object[] myParams;
+	
+	/**
+	 * Create a new LineInfo
+	 *
+	 * @param lineType The Type of line this is
+	 * @param line The line that this is
+	 * @param params The parameters that go with this line
+	 */
+	public LineInfo(final LineType lineType, final String line, final Object... params) {
+		myLineType = lineType;
+		myLine = line;
+		myParams = params;
 	}
 	
 	/**
-	 * Get the number for this log level.
+	 * Get the lineType that this class represents
 	 *
-	 * @return number associated with this loglevel.
+	 * @return LineType for this line
 	 */
-	public int getLevel() { return myLevel; }
+	public LineType getLineType() { return myLineType; }
 	
 	/**
-	 * Get the name of this log level.
+	 * Get the lineType that this class represents
 	 *
-	 * @return name associated with this loglevel.
+	 * @return The line
 	 */
-	public String toString() { return myName; }
+	public String getLine() { return myLine; }
 	
 	/**
-	 * Check if this level is displayable at the given log level.
+	 * Get the parameters for this line.
 	 *
-	 * @param o Given log level.
-	 * @return True if the number of this loglevel is euqal or less than the given
-	 *         log level.
+	 * @return Paramenters for this line
 	 */
-	public boolean isLoggable(final LogLevel o) {
-		return (this.getLevel() - o.getLevel()) <= 0;
-	}
+	public Object[] getParams() { return myParams.clone(); }
+
+	/**
+	 * Get a string representation of this Lineinfo
+	 *
+	 * @return String representation of this Lineinfo
+	 */
+	public String toString() { return "["+myLineType+"] "+myLine; }
 }
