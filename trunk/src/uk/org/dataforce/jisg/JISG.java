@@ -25,15 +25,16 @@
 package uk.org.dataforce.jisg;
 
 import java.util.ArrayList;
-// import java.util.Hashtable;
 
-import uk.org.dataforce.jisg.cliparser.CLIParser;
-import uk.org.dataforce.jisg.cliparser.CLIParam;
-import uk.org.dataforce.jisg.cliparser.BooleanParam;
-import uk.org.dataforce.jisg.cliparser.StringParam;
-import uk.org.dataforce.jisg.cliparser.IntegerParam;
+import uk.org.dataforce.cliparser.CLIParser;
+import uk.org.dataforce.cliparser.CLIParam;
+import uk.org.dataforce.cliparser.BooleanParam;
+import uk.org.dataforce.cliparser.StringParam;
+import uk.org.dataforce.cliparser.IntegerParam;
 import uk.org.dataforce.jisg.filetypes.FileType;
 import uk.org.dataforce.jisg.filetypes.FileTypeManager;
+import uk.org.dataforce.logger.Logger;
+import uk.org.dataforce.logger.LogLevel;
 
 /**
  * Main JISG class.
@@ -64,14 +65,14 @@ public class JISG {
 			Logger.setLevel(LogLevel.DEBUG);
 		}
 		
-		FileType thisFileType;
+		FileType thisFileType = null;
 		
 		Logger.info("JISG Loaded.");
 		if (cli.getParamNumber("-type") > 0) {
 			FileTypeManager fileTypeManager = FileTypeManager.getFileTypeManager();
 			String fileTypeName = cli.getParam("-type").getStringValue();
 			if (!fileTypeManager.addFileType(fileTypeName+"FileType")) {
-				Logger.error("Invalid file type given. Terminating");
+				Logger.error("Invalid file type given (I do not know about \""+fileTypeName+"\"). Terminating");
 				System.exit(1);
 			} else {
 				thisFileType = fileTypeManager.getFileType(fileTypeName+"FileType");
@@ -87,6 +88,12 @@ public class JISG {
 			Logger.error("No log files given. Terminating");
 			System.exit(1);
 		}
+		
+		for (int i = 0; i < redundant.size(); ++i) {
+			Logger.info("Parsing File: "+redundant.get(i));
+			new LogFileParser(thisFileType, redundant.get(i));
+		}
+		Logger.info("File parsing complete");
 	}
 	
 	/**

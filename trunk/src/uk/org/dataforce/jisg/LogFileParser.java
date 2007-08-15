@@ -1,4 +1,4 @@
-s /*
+ /*
  * Copyright (c) 2006-2007 Shane Mc Cormack
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,6 +25,11 @@ s /*
 package uk.org.dataforce.jisg;
 
 import uk.org.dataforce.jisg.filetypes.FileType;
+import uk.org.dataforce.logger.Logger;
+import uk.org.dataforce.logger.LogLevel;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Log file parser.
@@ -34,6 +39,22 @@ public class LogFileParser {
 	 * Create an instance of LogFileParser.
 	 */
 	public LogFileParser(final FileType type, final String file) {
-		
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new FileReader(file));
+			String line;
+			while ((line = in.readLine()) != null){
+				System.out.println("\t"+type.getLineInfo(line));
+			}
+		} catch (java.io.FileNotFoundException e) {
+			Logger.error(e.getMessage());
+		} catch (IOException e) {
+			Logger.error(e.getMessage());
+			if (LogLevel.ERROR.isLoggable(Logger.getLevel())) {
+				e.printStackTrace();
+			}
+		} finally {
+			try { in.close(); } catch (Exception e) {}
+		}
 	}
 }

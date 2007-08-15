@@ -32,7 +32,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
-import uk.org.dataforce.jisg.Logger;
+import uk.org.dataforce.logger.Logger;
 
 public class FileTypeManager {
 	/**
